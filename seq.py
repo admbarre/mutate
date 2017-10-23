@@ -13,8 +13,15 @@ sequence = ''.join(lines)
 print(f'Sequence: {sequence}')
 
 def permute_single_base(mutation,sequence):
-    pass
+    permutations = []
+    seq = list(sequence)
+    for i,_ in enumerate(seq):
+        copy_seq = seq[::]
+        copy_seq[i] = mutation
+        permutations.append(''.join(copy_seq))
+    return permutations
 
+test_permutations = permute_single_base('[gatc]', 'gaattc')
 # Sequence: GAATTC
 permutations  = [
         '[gatc]aattc',
@@ -23,12 +30,21 @@ permutations  = [
         'gaa[gatc]tc',
         'gaat[gatc]c',
         'gaatt[gatc]']
-mutations = []
-for p in permutations:
-    matches = re.findall(p,sequence)
-    if matches:
-        for match in matches:
-            mutations.append(match)
 
-for i,m in enumerate(mutations):
-    print(f'Mutation {i+1}: {m}')
+print(f'Test: {test_permutations}')
+print(f'Actual: {permutations}')
+print(f'Test == Actual: {test_permutations == permutations}')
+
+def main():
+    mutations = []
+    for p in permutations:
+        matches = re.findall(p,sequence)
+        if matches:
+            for match in matches:
+                mutations.append(match)
+
+    for i,m in enumerate(mutations):
+        print(f'Mutation {i+1}: {m}')
+
+if __name__ == '__main__':
+    main()
